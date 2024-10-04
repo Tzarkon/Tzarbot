@@ -61,7 +61,7 @@ async def on_message(message):
         await message.reply('\u16BB\u16AB\u16C8\u16E0\u16BE\u16D6\u16CB')
 
     if "<DOH!>" in message.content:
-        with open('doh.txt', 'r') as f:
+        with open('responses/doh.txt', 'r') as f:
             bot_choice = []
             for line in f:
                 line = line.strip()
@@ -70,7 +70,7 @@ async def on_message(message):
         await message.reply(response)
 
     if "sheesh" in message.content.lower():
-        with open('sheesh.txt', 'r') as fee:
+        with open('responses/sheesh.txt', 'r') as fee:
             bot_say = []
             for line in fee:
                 line = line.strip()
