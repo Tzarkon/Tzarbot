@@ -20,7 +20,6 @@ load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 
 
-
 @tzarbot.event
 async def on_ready():
     print(f'{tzarbot.user} has connected to Discord!')
@@ -60,24 +59,6 @@ async def on_message(message):
         await message.add_reaction(response)
         await message.reply('\u16BB\u16AB\u16C8\u16E0\u16BE\u16D6\u16CB')
 
-    if "<DOH!>" in message.content:
-        with open('responses/doh.txt', 'r') as f:
-            bot_choice = []
-            for line in f:
-                line = line.strip()
-                bot_choice.append(line)    
-        response = random.choice(bot_choice)
-        await message.reply(response)
-
-    if "sheesh" in message.content.lower():
-        with open('responses/sheesh.txt', 'r') as fee:
-            bot_say = []
-            for line in fee:
-                line = line.strip()
-                bot_say.append(line)       
-        response = random.choice(bot_say)
-        await message.reply(response)
-
     if "thanks tzarbot" in message.content.lower() and message.author.name == 'tzarquon' or "thank you tzarbot" in message.content.lower() and message.author.name == 'tzarquon':
         await message.reply("No worries Master, my only wish is to serve you. . . Bhuwa ha ha ha!")
     elif "thanks tzarbot" in message.content.lower() or "thank you tzarbot" in message.content.lower():
@@ -88,8 +69,18 @@ async def on_message(message):
         if "tzarbot" in message.content.lower():
             await message.reply("Bug Off! . . . I'm tryin' ta sleep here!")
 
-        
-
+    entries = os.listdir('responses/')
+    for entry in entries:
+        if entry in message.content.lower():
+            with open ('responses/' + entry, 'r') as f:
+                bot_choice = []
+                for line in f:
+                    line = line.strip()
+                    bot_choice.append(line)
+            response = random.choice(bot_choice)
+            await message.reply(response)
+    
+ 
 @tzarbot.command()
 async def roll(ctx, dice: str = commands.parameter(default="None", description='''dice should be input in an NdN format. Number of dice then Number of faces on the die''')):
     """Rolls a dice in NdN format. This function was copied from basicbot.py by GoogleGenius and jontobonto at https://github.com/Rapptz/discord.py/blob/master/examples/basic_bot.py, with an MIT license."""
